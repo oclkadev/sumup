@@ -94,7 +94,7 @@ sumup src -c -k
 
 ## 🌟 Use Cases
 
-```
+```text
                        ┌──► 🤖 Web LLM (free or near-free interface)
                        │
   [ Codebase / Git ] ──┼──► 👥 Peer review & chat (drop a .md file)
@@ -163,7 +163,7 @@ sumup src -f
 ✅ 13 files sumuprized in `.sumup_20260806_180000.md`
 ```
 
-> **Note:** `-c` and `-f` are mutually exclusive. Error: *"Error: --copy-only and --file-only are mutually exclusive"*.
+> **Note:** `-c` and `-f` are mutually exclusive. Error: _"Error: --copy-only and --file-only are mutually exclusive"_.
 
 ### 📋 Git
 
@@ -191,7 +191,7 @@ Filters files based on the diff against a parent branch (e.g. `main`). Only file
 sumup src -b main
 ```
 
-> **Note:** `-d`, `-s`, and `-b` are mutually exclusive. Error: *"Error: --diff, --staged and --branch are mutually exclusive"*.
+> **Note:** `-d`, `-s`, and `-b` are mutually exclusive. Error: _"Error: --diff, --staged and --branch are mutually exclusive"_.
 
 ### 📋 Filters
 
@@ -342,7 +342,7 @@ sumup config get output.format
 markdown
 ```
 
-> **Note:** Key not found → error: *"Error: unknown config key 'foo.bar'"*.
+> **Note:** Key not found → error: _"Error: unknown config key 'foo.bar'"_.
 
 ### 📋 `sumup config set <key> <value>`
 
@@ -364,8 +364,8 @@ sumup config set git.baseBranch develop --global
 ✅ git.baseBranch = develop (user)
 ```
 
-> **Note:** Unknown key → error: *"Error: unknown config key 'foo.bar'"*. Invalid value → error: *"Error: invalid value 'xyz' for output.format (expected: markdown | json)"*.
-
+> **Note:** Unknown key → error: _"Error: unknown config key 'foo.bar'"_. Invalid value → error: _"Error: invalid value 'xyz' for output.format (expected: markdown | json)"_.
+>
 > **Legend:** ✅ Implemented · 🚧 In progress · 📋 Planned
 
 ---
@@ -394,6 +394,7 @@ sumup src -f > foo.md
 # The pipe receives only the JSON
 sumup src -s -j | curl -X POST https://api.llm.example.com/...
 ```
+
 ---
 
 ## 🔮 Upcoming
@@ -421,16 +422,16 @@ pnpm install
 
 ### Scripts
 
-| Script | Description |
-|--------|-------------|
-| `pnpm dev` | Run the CLI in development mode |
-| `pnpm build` | Compile with tsup |
-| `pnpm test:coverage` | Unit tests with coverage |
-| `pnpm test:e2e` | End-to-end tests |
-| `pnpm test:mutate` | Mutation testing (Stryker) |
-| `pnpm lint` | ESLint |
-| `pnpm check:all` | All checks (types, lint, tests, build, size, secrets) |
-| `pnpm check:fast` | Fast checks (types, lint, tests, knip) |
+| Script               | Description                                           |
+| -------------------- | ----------------------------------------------------- |
+| `pnpm dev`           | Run the CLI in development mode                       |
+| `pnpm build`         | Compile with tsup                                     |
+| `pnpm test:coverage` | Unit tests with coverage                              |
+| `pnpm test:e2e`      | End-to-end tests                                      |
+| `pnpm test:mutate`   | Mutation testing (Stryker)                            |
+| `pnpm lint`          | ESLint                                                |
+| `pnpm check:all`     | All checks (types, lint, tests, build, size, secrets) |
+| `pnpm check:fast`    | Fast checks (types, lint, tests, knip)                |
 
 ### Commits
 
