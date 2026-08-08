@@ -1,4 +1,4 @@
-# @oclkadev/node-starter
+# @oclkadev/sumup
 
 ## 0.4.0
 
