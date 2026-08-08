@@ -12,5 +12,13 @@ export default {
     'pnpm-lock.yaml',
   ],
   language: 'en,fr',
-  words: ['andresz', 'hsep', 'oclkadev', 'Qube', 'sonarqube', 'sumup'],
+  words: [
+    'andresz',
+    'hsep',
+    'oclkadev',
+    'qube',
+    'sonarqube',
+    'sumup',
+    'sumuprized',
+  ],
 };
