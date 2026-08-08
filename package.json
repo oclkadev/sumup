@@ -82,6 +82,7 @@
     "check:size": "size-limit",
     "format": "prettier --write .",
     "gen:docs": "typedoc",
+    "gen:sonar": "node scripts/gen-sonar-config.mjs",
     "knip": "knip --config knip.config.mjs",
     "prepare": "husky",
     "commit": "cz",

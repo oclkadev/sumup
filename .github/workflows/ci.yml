@@ -54,7 +54,15 @@ jobs:
       - name: 🧪 Tests & Coverage
         run: pnpm vitest run --coverage --project unit
 
-      - name: 🔐 Secrets Scan
+      - name: � Generate SonarQube Config
+        run: pnpm gen:sonar
+
+      - name: �🔍 SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@7006c4492b2e0ee0f816d36501671557c97f5995 # v8.1.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: �� Secrets Scan
         uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
