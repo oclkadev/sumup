@@ -5,7 +5,11 @@ import { fileURLToPath } from 'node:url';
 import testExclude from '../test-exclude.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const propertiesPath = path.resolve(__dirname, '..', 'sonar-project.properties');
+const propertiesPath = path.resolve(
+  __dirname,
+  '..',
+  'sonar-project.properties',
+);
 
 const coverageExclusions = ['**/*.spec.ts', ...testExclude].join(',');
 const cpdExclusions = ['**/*.spec.ts', '**/*.e2e-spec.ts'].join(',');
