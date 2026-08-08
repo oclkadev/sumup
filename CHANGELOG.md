@@ -1,5 +1,11 @@
 # @oclkadev/sumup
 
+## 0.5.0
+
+### Minor Changes
+
+- 782a831: Rename package from `@oclkadev/node-starter` to `@oclkadev/sumup` and update binary name from `node-starter` to `sumup`. Add SonarQube code quality scanning to CI pipeline.
+
 ## 0.4.0
 
 ### Minor Changes
