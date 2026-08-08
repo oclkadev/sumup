@@ -16,20 +16,20 @@ describe('CLI e2e', () => {
       const { stdout, exitCode } = await runCli(flag);
 
       expect(exitCode).toBe(0);
-      expect(stdout).toContain('Usage: cli [options] [command]');
-      expect(stdout).toContain('-v, --version');
-      expect(stdout).toContain('-h, --help');
-      expect(stdout).toContain('test [options]');
+      expect(stdout).toMatch(/Usage: cli \[options\] \[command\]/);
+      expect(stdout).toMatch(/Options:/);
+      expect(stdout).toMatch(/-v, --version/);
+      expect(stdout).toMatch(/-h, --help/);
+      expect(stdout).toMatch(/Commands:/);
     });
 
-    it('outputs test subcommand help with test -h', async () => {
-      const { stdout, exitCode } = await runCli('test', '-h');
+    it('outputs subcommand help with config -h', async () => {
+      const { stdout, exitCode } = await runCli('config', '-h');
 
       expect(exitCode).toBe(0);
-      expect(stdout).toContain('Usage: cli test [options]');
-      expect(stdout).toContain('Test command scaffold');
-      expect(stdout).toContain('--quiet -q');
-      expect(stdout).toContain('--verbose -V');
+      expect(stdout).toMatch(/Usage: cli config \[options\] \[command\]/);
+      expect(stdout).toMatch(/Manage configuration/);
+      expect(stdout).toMatch(/Commands:/);
     });
   });
 });

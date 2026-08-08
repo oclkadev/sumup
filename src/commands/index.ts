@@ -1,8 +1,9 @@
 import { Command, CommanderError } from 'commander';
 
 import { version } from '@/../package.json';
-import { testCommand } from '@/commands/test';
 import { io } from '@/ui/io';
+
+import { configCommand } from './config';
 
 const command = new Command('cli');
 command
@@ -12,7 +13,7 @@ command
     outputError: () => {},
   });
 
-const subCommands: Command[] = [testCommand];
+const subCommands: Command[] = [configCommand];
 for (const subCommand of subCommands) command.addCommand(subCommand);
 
 command.hook('preAction', (_command, actionCommand) => {

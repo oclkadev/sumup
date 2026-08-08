@@ -9,3 +9,8 @@ export const OPTION_VERBOSE = [
 ] as const;
 
 export const OPTION_QUIET = ['--quiet -q', 'Suppress all output'] as const;
+
+export const OPTION_RAW = [
+  '--raw',
+  'Output raw values without formatting',
+] as const;
