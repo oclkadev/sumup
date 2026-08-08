@@ -15,6 +15,7 @@ export class Store {
 
   constructor(defaults: Record<string, unknown> = {}) {
     this.conf = new Conf<Record<string, unknown>>({
+      projectName: 'sumup',
       configName: 'sumup-config',
       defaults,
     });
@@ -28,9 +29,13 @@ export class Store {
         message: this.formatMessage(issue),
       }));
 
+      const details = errors
+        .map((error) => `${error.field}: ${error.message}`)
+        .join('; ');
+
       throw new AppError(
         ErrorCode.CONFIG_INVALID,
-        `Invalid configuration: ${errors.length} error(s)`,
+        `Invalid configuration: ${details}`,
         400,
         { errors },
       );
@@ -39,6 +44,10 @@ export class Store {
   }
 
   private formatMessage(issue: ZodError['issues'][number]): string {
+    const prefix = 'Invalid option: ';
+    if (issue.message.startsWith(prefix)) {
+      return issue.message.slice(prefix.length);
+    }
     return issue.message;
   }
 
@@ -48,6 +57,14 @@ export class Store {
 
   get(key: string): unknown {
     const config = this.validate(this.conf.store);
+    if (!has(config, key)) {
+      throw new AppError(
+        ErrorCode.CONFIG_KEY_UNKNOWN,
+        `Unknown configuration key ${key}`,
+        400,
+        { key },
+      );
+    }
     return get(config, key);
   }
 

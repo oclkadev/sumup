@@ -3,6 +3,8 @@ const exclude = [
   'src/**/__e2e__/**',
   'src/**/__tests__/**',
   'src/**/types/**',
+  'src/commands/config/get/index.ts',
+  'src/commands/config/index.ts',
   'src/commands/index.ts',
   'src/commands/options.ts',
   'src/commands/test/index.ts',

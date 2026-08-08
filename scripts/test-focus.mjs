@@ -89,7 +89,7 @@ async function main() {
       process.exit(mutateResult.status ?? 1);
     }
 
-    extractSurvivedMutants();
+    extractSurvivedMutants(sourcePath);
   }
 }
 
@@ -172,12 +172,14 @@ function formatMutant(mutant, filePath, sourceLines, testNames) {
   return lines.join('\n');
 }
 
-function extractSurvivedMutants() {
+function extractSurvivedMutants(sourcePath) {
   const report = JSON.parse(readFileSync(REPORT_PATH, 'utf8'));
   const testNames = collectTestNames(report);
   const blocks = [];
 
   for (const [filePath, fileData] of Object.entries(report.files)) {
+    if (filePath !== sourcePath) continue;
+
     const sourceLines = readFileSync(filePath, 'utf8').split('\n');
     const mutants = fileData.mutants ?? [];
     const survived = mutants.filter((mutant) => mutant.status === 'Survived');

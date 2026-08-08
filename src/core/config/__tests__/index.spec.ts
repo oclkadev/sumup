@@ -1,53 +1,39 @@
 import { Store } from '@/core/config/store';
 import { AppError } from '@/core/errors';
+import {
+  DEFAULT_MOCK_DATA,
+  resetMockData,
+} from '@/tests/unit/helpers/mock-config';
 
 const mockSet = vi.hoisted(() => vi.fn());
 const mockDelete = vi.hoisted(() => vi.fn());
 const mockData = vi.hoisted(() => ({
-  data: {
-    output: { format: 'markdown', mode: 'both' },
-    naming: { pattern: '.sumup_<timestamp>.md' },
-    git: { baseBranch: 'main' },
-  } as Record<string, unknown>,
+  data: {} as Record<string, unknown>,
 }));
 
-vi.mock('conf', () => ({
-  default: class MockConfig {
-    path: string;
-    set = mockSet;
-    delete = mockDelete;
+vi.mock('conf', async () => {
+  const { createMockConfigClass } =
+    await import('@/tests/unit/helpers/mock-config');
+  return { default: createMockConfigClass(mockData, mockSet, mockDelete) };
+});
 
-    constructor(options: {
-      configName?: string;
-      defaults?: Record<string, unknown>;
-    }) {
-      this.path = `/mock/${options.configName ?? 'config'}.json`;
-      mockData.data = structuredClone(
-        options.defaults ?? {
-          output: { format: 'markdown', mode: 'both' },
-          naming: { pattern: '.sumup_<timestamp>.md' },
-          git: { baseBranch: 'main' },
-        },
-      );
-    }
-
-    get store() {
-      return mockData.data;
-    }
-  },
-}));
+function catchError(function_: () => unknown): AppError {
+  try {
+    function_();
+    throw new Error('Expected function to throw, but it did not');
+  } catch (error) {
+    if (error instanceof AppError) return error;
+    throw error;
+  }
+}
 
 describe('Store', () => {
   let store: Store;
 
   beforeEach(() => {
-    mockData.data = {
-      output: { format: 'markdown', mode: 'both' },
-      naming: { pattern: '.sumup_<timestamp>.md' },
-      git: { baseBranch: 'main' },
-    };
+    resetMockData(mockData);
     vi.clearAllMocks();
-    store = new Store(mockData.data);
+    store = new Store(DEFAULT_MOCK_DATA);
   });
 
   describe('constructor', () => {
@@ -62,8 +48,8 @@ describe('Store', () => {
       expect(customStore.all()).toEqual(customDefaults);
     });
 
-    it('uses configName sumup-config in path', () => {
-      expect(store.path).toBe('/mock/sumup-config.json');
+    it('uses projectName and configName in path', () => {
+      expect(store.path).toBe('/mock/sumup/sumup-config.json');
     });
   });
 
@@ -88,68 +74,98 @@ describe('Store', () => {
     it('includes error details in context when config is invalid', () => {
       mockData.data = { output: 'invalid' };
 
-      try {
-        store.all();
-      } catch (error) {
-        expect(error).toBeInstanceOf(AppError);
-        expect((error as AppError).context).toHaveProperty('errors');
-        expect(Array.isArray((error as AppError).context?.['errors'])).toBe(
-          true,
-        );
-      }
+      const error = catchError(() => store.all());
+
+      expect(error.context).toHaveProperty('errors');
+      expect(Array.isArray(error.context?.['errors'])).toBe(true);
     });
 
     it('reports multiple validation errors', () => {
       mockData.data = { output: 'invalid', naming: 'invalid', git: 'invalid' };
 
-      try {
-        store.all();
-      } catch (error) {
-        expect(error).toBeInstanceOf(AppError);
-        const errors = (error as AppError).context?.['errors'] as {
-          field: string;
-          message: string;
-        }[];
-        expect(errors.length).toBeGreaterThan(0);
-        expect(errors.some((error) => error.field.includes('output'))).toBe(
-          true,
-        );
-      }
+      const error = catchError(() => store.all());
+      const errors = error.context?.['errors'] as {
+        field: string;
+        message: string;
+      }[];
+
+      expect(errors.length).toBeGreaterThan(0);
+      expect(errors.some((error) => error.field.includes('output'))).toBe(true);
     });
 
     it('formats error fields with dot separator not empty string', () => {
       mockData.data = { output: { format: 'invalid' } };
 
-      try {
-        store.all();
-      } catch (error) {
-        const errors = (error as AppError).context?.['errors'] as {
-          field: string;
-          message: string;
-        }[];
-        const outputError = errors.find((error) =>
-          error.field.startsWith('output'),
-        );
-        expect(outputError?.field).toContain('.');
-        expect(outputError?.field).toMatch(/^output\./);
-      }
+      const error = catchError(() => store.all());
+      const errors = error.context?.['errors'] as {
+        field: string;
+        message: string;
+      }[];
+      const outputError = errors.find((error) =>
+        error.field.startsWith('output'),
+      );
+
+      expect(outputError?.field).toContain('.');
+      expect(outputError?.field).toMatch(/^output\./);
     });
 
     it('includes message from formatMessage in errors', () => {
       mockData.data = { output: 'invalid' };
 
-      try {
-        store.all();
-      } catch (error) {
-        const errors = (error as AppError).context?.['errors'] as {
-          field: string;
-          message: string;
-        }[];
-        expect(errors.every((error) => error.message.length > 0)).toBe(true);
-        expect(errors.every((error) => typeof error.message === 'string')).toBe(
-          true,
-        );
-      }
+      const error = catchError(() => store.all());
+      const errors = error.context?.['errors'] as {
+        field: string;
+        message: string;
+      }[];
+
+      expect(errors.every((error) => error.message.length > 0)).toBe(true);
+      expect(errors.every((error) => typeof error.message === 'string')).toBe(
+        true,
+      );
+    });
+
+    it('includes field and message in error message string', () => {
+      mockData.data = { output: { format: 'invalid' } };
+
+      const error = catchError(() => store.all());
+
+      expect(error.message).toContain('output.format:');
+      expect(error.message).toMatch(/output\.format: \S+/);
+    });
+
+    it('joins multiple errors with semicolon separator', () => {
+      mockData.data = {
+        output: { format: 'invalid' },
+        naming: { pattern: 123 },
+      };
+
+      const error = catchError(() => store.all());
+
+      expect(error.message).toContain('; ');
+      expect(error.message).toMatch(/; \S+/);
+    });
+
+    it('strips Invalid option prefix from zod messages', () => {
+      mockData.data = { output: { format: 'invalid' } };
+
+      const error = catchError(() => store.all());
+
+      expect(error.message).not.toContain('Invalid option:');
+      expect(error.message).toContain('expected');
+      expect(error.message).not.toContain('Stryker');
+    });
+
+    it('returns message unchanged when it does not start with Invalid option', () => {
+      mockData.data = { output: 'invalid' };
+
+      const error = catchError(() => store.all());
+      const errors = error.context?.['errors'] as {
+        field: string;
+        message: string;
+      }[];
+
+      expect(errors.length).toBeGreaterThan(0);
+      expect(errors[0]!.message).toMatch(/^Invalid input/);
     });
   });
 
@@ -165,16 +181,20 @@ describe('Store', () => {
       expect(result).toBe(expected);
     });
 
-    it('returns undefined for unknown nested key', () => {
-      const result = store.get('output.unknown');
+    it('throws AppError for unknown nested key with context', () => {
+      const error = catchError(() => store.get('output.unknown'));
 
-      expect(result).toBeUndefined();
+      expect(error.message).toBe('Unknown configuration key output.unknown');
+      expect(error.context).toHaveProperty('key');
+      expect(error.context?.['key']).toBe('output.unknown');
     });
 
-    it('returns undefined for unknown top-level key', () => {
-      const result = store.get('unknown');
+    it('throws AppError for unknown top-level key with context', () => {
+      const error = catchError(() => store.get('unknown'));
 
-      expect(result).toBeUndefined();
+      expect(error.message).toBe('Unknown configuration key unknown');
+      expect(error.context).toHaveProperty('key');
+      expect(error.context?.['key']).toBe('unknown');
     });
 
     it('throws AppError when config is invalid', () => {
@@ -207,29 +227,19 @@ describe('Store', () => {
     });
 
     it('throws AppError for unknown key and does not call conf.set', () => {
-      try {
-        store.set('unknown.key', 'value');
-      } catch (error) {
-        expect(error).toBeInstanceOf(AppError);
-        expect((error as AppError).message).toBe(
-          'Unknown configuration key: unknown.key',
-        );
-        expect((error as AppError).context).toHaveProperty('key');
-        expect((error as AppError).context?.['key']).toBe('unknown.key');
-      }
+      const error = catchError(() => store.set('unknown.key', 'value'));
 
+      expect(error.message).toBe('Unknown configuration key: unknown.key');
+      expect(error.context).toHaveProperty('key');
+      expect(error.context?.['key']).toBe('unknown.key');
       expect(mockSet).not.toHaveBeenCalled();
     });
 
     it('throws AppError for empty key and does not call conf.set', () => {
-      try {
-        store.set('', 'value');
-      } catch (error) {
-        expect(error).toBeInstanceOf(AppError);
-        expect((error as AppError).context).toHaveProperty('key');
-        expect((error as AppError).context?.['key']).toBe('');
-      }
+      const error = catchError(() => store.set('', 'value'));
 
+      expect(error.context).toHaveProperty('key');
+      expect(error.context?.['key']).toBe('');
       expect(mockSet).not.toHaveBeenCalled();
     });
 

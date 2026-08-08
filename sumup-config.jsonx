@@ -1,0 +1,12 @@
+{
+	"output": {
+		"format": "markdown",
+		"mode": "both"
+	},
+	"naming": {
+		"pattern": ".sumup_<timestamp>.md"
+	},
+	"git": {
+		"baseBranch": "main"
+	}
+}
