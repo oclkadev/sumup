@@ -1,5 +1,5 @@
 import { configPathHandler } from '@/commands/config/path/handler';
-import { store } from '@/core/config';
+import { getStore } from '@/core/config';
 import { io } from '@/ui/io';
 
 vi.mock('@/core/config');
@@ -9,12 +9,13 @@ vi.mock('picocolors', () => ({
 }));
 
 describe('configPathHandler', () => {
+  const store = {
+    path: '/mock/config.json',
+  };
+
   beforeEach(() => {
     vi.clearAllMocks();
-    Object.defineProperty(store, 'path', {
-      get: () => '/mock/config.json',
-      configurable: true,
-    });
+    vi.mocked(getStore).mockReturnValue(store as never);
   });
 
   it('calls io.log with store path when raw is true', async () => {

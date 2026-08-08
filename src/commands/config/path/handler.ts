@@ -1,6 +1,6 @@
 import pc from 'picocolors';
 
-import { store } from '@/core/config';
+import { getStore } from '@/core/config';
 import { io } from '@/ui/io';
 
 interface ConfigPathOptions {
@@ -10,7 +10,7 @@ interface ConfigPathOptions {
 export async function configPathHandler(
   options: ConfigPathOptions,
 ): Promise<void> {
-  const { path } = store;
+  const { path } = getStore();
 
   if (options.raw) {
     io.log(path);

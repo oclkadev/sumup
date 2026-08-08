@@ -6,6 +6,7 @@ const exclude = [
   'src/commands/config/get/index.ts',
   'src/commands/config/index.ts',
   'src/commands/config/path/index.ts',
+  'src/commands/config/verify/index.ts',
   'src/commands/index.ts',
   'src/commands/options.ts',
   'src/commands/test/index.ts',

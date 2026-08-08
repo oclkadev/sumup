@@ -1,4 +1,6 @@
 import { DEFAULTS } from './schema';
 import { Store } from './store';
 
-export const store = new Store(DEFAULTS as Record<string, unknown>);
+export function getStore(): Store {
+  return new Store(DEFAULTS as Record<string, unknown>);
+}

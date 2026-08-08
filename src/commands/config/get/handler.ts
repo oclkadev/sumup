@@ -1,6 +1,6 @@
 import pc from 'picocolors';
 
-import { store } from '@/core/config';
+import { getStore } from '@/core/config';
 import { io } from '@/ui/io';
 
 interface ConfigGetOptions {
@@ -11,7 +11,7 @@ export async function configGetHandler(
   key: string,
   options: ConfigGetOptions,
 ): Promise<void> {
-  const value = store.get(key);
+  const value = getStore().get(key);
 
   if (options.raw) {
     io.log(value);
