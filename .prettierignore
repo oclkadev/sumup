@@ -1,6 +1,5 @@
 .agent/**
 .husky/**
-.ops/**
 .stryker-tmp/**
 coverage/**
 dist/**

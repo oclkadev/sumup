@@ -3,7 +3,8 @@ const knipConfig = {
   ignore: [
     'commitlint.config.mjs',
     'src/commands/options.ts',
-    'src/core/errors/app-error.ts',
+    'src/core/config/index.ts',
+    'src/core/config/schema.ts'
   ],
   ignoreBinaries: ['gitleaks'],
   ignoreDependencies: [

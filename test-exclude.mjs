@@ -6,6 +6,8 @@ const exclude = [
   'src/commands/index.ts',
   'src/commands/options.ts',
   'src/commands/test/index.ts',
+  'src/core/config/index.ts',
+  'src/core/config/schema.ts',
   'src/core/errors/app-error.ts',
   'src/core/errors/codes.ts',
   'src/core/errors/index.ts',
