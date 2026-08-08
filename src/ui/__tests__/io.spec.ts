@@ -235,13 +235,13 @@ describe('link', () => {
 });
 
 describe('fileLink', () => {
-  it('returns relative path as link text when not TTY', () => {
+  it('returns absolute path as link text when not TTY', () => {
     mockTTY(false);
 
     const absolutePath = path.join(process.cwd(), 'src', 'index.ts');
     const result = io.fileLink(absolutePath);
 
-    expect(result).toBe('src/index.ts');
+    expect(result).toBe(absolutePath);
   });
 
   it('returns ANSI link with file:// protocol when TTY', () => {
@@ -250,7 +250,7 @@ describe('fileLink', () => {
     const absolutePath = path.join(process.cwd(), 'src', 'index.ts');
     const result = io.fileLink(absolutePath);
 
-    expect(result).toContain('src/index.ts');
+    expect(result).toContain(absolutePath);
     expect(result).toContain(`file://${absolutePath}`);
   });
 });

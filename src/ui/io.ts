@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import figures from 'figures';
 import pc from 'picocolors';
 import textTable from 'text-table';
@@ -76,7 +74,6 @@ export const io = {
   },
 
   fileLink: (absolutePath: string): string => {
-    const relativePath = path.relative(process.cwd(), absolutePath);
-    return io.link(relativePath, `file://${absolutePath}`);
+    return io.link(absolutePath, `file://${absolutePath}`);
   },
 };
