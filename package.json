@@ -1,28 +1,31 @@
 {
-  "name": "@oclkadev/node-starter",
+  "name": "@oclkadev/sumup",
   "version": "0.4.0",
-  "description": "Fast TS starter for Node.js libraries and CLI tools.",
+  "description": "Gather scattered code, diffs, and docs into clean, zero-fluff context for AIs and dev teams.",
   "keywords": [
-    "node",
-    "nodejs",
-    "typescript",
-    "starter",
-    "template",
-    "boilerplate",
-    "scaffold",
-    "library",
     "cli",
-    "cli-app",
-    "esm",
-    "cjs",
-    "tsup",
-    "pnpm",
-    "command-line",
-    "terminal"
+    "sumup",
+    "code-context",
+    "llm",
+    "ai",
+    "context-engineering",
+    "bundle",
+    "aggregator",
+    "git",
+    "diff",
+    "clipboard",
+    "code-review",
+    "developer-tools",
+    "markdown",
+    "documentation",
+    "glossary",
+    "onboarding",
+    "typescript",
+    "esm"
   ],
-  "homepage": "https://github.com/oclkadev/node-starter#readme",
+  "homepage": "https://github.com/oclkadev/sumup#readme",
   "bugs": {
-    "url": "https://github.com/oclkadev/node-starter/issues"
+    "url": "https://github.com/oclkadev/sumup/issues"
   },
   "license": "MIT",
   "author": {
@@ -32,7 +35,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oclkadev/node-starter.git"
+    "url": "git+https://github.com/oclkadev/sumup.git"
   },
   "type": "module",
   "main": "./dist/index.mjs",
@@ -51,7 +54,7 @@
     }
   },
   "bin": {
-    "node-starter": "./dist/index.mjs"
+    "sumup": "./dist/index.mjs"
   },
   "files": [
     "LICENSE",
@@ -79,6 +82,7 @@
     "check:size": "size-limit",
     "format": "prettier --write .",
     "gen:docs": "typedoc",
+    "gen:sonar": "node scripts/gen-sonar-config.mjs",
     "knip": "knip --config knip.config.mjs",
     "prepare": "husky",
     "commit": "cz",

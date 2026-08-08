@@ -1,256 +1,456 @@
 <div align="center">
   <img src="https://oclka.dev/images/logo.svg" alt="Logo" width="100" />
-  <h1>Node Starter</h1>
-  <p>Fast TS starter for Node.js libraries and CLI tools.</p>
+  <h1>Sumup</h1>
+  <p>Gather scattered code, diffs, and docs into clean, zero-fluff context for AIs and dev teams.</p>
 </div>
 
-[![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=oclkadev_node-starter&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=oclkadev_node-starter)
-[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Foclkadev%2Fnode-starter%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/oclkadev/node-starter/main)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=oclkadev_node-starter&metric=coverage)](https://sonarcloud.io/summary/new_code?id=oclkadev_node-starter)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=oclkadev_node-starter&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=oclkadev_node-starter)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=oclkadev_node-starter&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=oclkadev_node-starter)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=oclkadev_node-starter&metric=bugs)](https://sonarcloud.io/summary/new_code?id=oclkadev_node-starter)
-![CI](https://github.com/oclkadev/node-starter/actions/workflows/ci.yml/badge.svg)
-![Release](https://github.com/oclkadev/node-starter/actions/workflows/release.yml/badge.svg)
+[![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=oclkadev_sumup&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=oclkadev_sumup)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=oclkadev_sumup&metric=coverage)](https://sonarcloud.io/summary/new_code?id=oclkadev_sumup)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Foclkadev%2Fsumup%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/oclkadev/sumup/main)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=oclkadev_sumup&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=oclkadev_sumup)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=oclkadev_sumup&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=oclkadev_sumup)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=oclkadev_sumup&metric=bugs)](https://sonarcloud.io/summary/new_code?id=oclkadev_sumup)
+![CI](https://github.com/oclkadev/sumup/actions/workflows/ci.yml/badge.svg)
+![Release](https://github.com/oclkadev/sumup/actions/workflows/release.yml/badge.svg)
 
-## Features
+sumup is a CLI that aggregates files and diffs into a single clean document. No config, no presets, no daemon. `sumup src -s -c` → clipboard → paste into your web LLM. That's it!
 
-- **TypeScript** — strict mode with advanced flags (`noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `verbatimModuleSyntax`)
-- **Dual build** — CJS + ESM output with type declarations via [tsup](https://tsup.egoist.dev/)
-- **Linting** — [ESLint](https://eslint.org/) flat config with [typescript-eslint](https://typescript-eslint.io/), [unicorn](https://github.com/sindresorhus/eslint-plugin-unicorn), [sonarjs](https://github.com/SonarSource/eslint-plugin-sonarjs), [perfectionist](https://perfectionist.dev/), [tsdoc](https://github.com/microsoft/tsdoc)
-- **Formatting** — [Prettier](https://prettier.io/) with eslint-config-prettier integration
-- **Spell check** — [cspell](https://cspell.org/) for TS, MD, JSON, YAML files
-- **Markdown lint** — [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli)
-- **Dead code detection** — [Knip](https://knip.dev/)
-- **Secret scanning** — [gitleaks](https://github.com/gitleaks/gitleaks)
-- **Size limits** — [size-limit](https://github.com/ai/size-limit) with esbuild preset
-- **Publish checks** — [publint](https://publint.dev/) + [@arethetypeswrong/cli](https://github.com/arethetypeswrong/cli)
-- **Git hooks** — [husky](https://typicode.github.io/husky/) with [lint-staged](https://github.com/lint-staged/lint-staged)
-- **Commit conventions** — [commitlint](https://commitlint.js.org/) + [commitizen](https://commitizen-tools.github.io/cz-cli/)
-- **Versioning** — [Changesets](https://github.com/changesets/changesets) for automated versioning and changelogs
-- **API docs** — [TypeDoc](https://typedoc.org/) for TSDoc-based API documentation generation
-- **CLI** — [Commander](https://github.com/tj/commander.js) with shared options (quiet, verbose, dry-run), centralized I/O layer ([picocolors](https://github.com/nicktomlin/picocolors), [figures](https://github.com/sindresorhus/figures), [text-table](https://github.com/substack/text-table)), and typed error handling (`AppError` with error codes)
+---
 
-## CI/CD
+## 📖 Table of Contents
 
-| Workflow                          | Description                                                                                                            |
-| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| **CI** (`ci.yml`)                 | Type checking, linting, unit tests with coverage, secrets scanning, build, E2E tests, size limit, and mutation testing |
-| **Release** (`release.yml`)       | Automated versioning and publishing via Changesets with provenance                                                     |
-| **CodeQL** (`codeql.yml`)         | Static security analysis with weekly scheduled scans                                                                   |
-| **Docs** (`docs.yml`)             | TypeDoc API documentation generation and deployment to GitHub Pages                                                    |
-| **Stale** (`stale.yml`)           | Auto-close inactive issues and PRs after 30 days                                                                       |
-| **Size Limit** (`size-limit.yml`) | Bundle size diff comment on pull requests                                                                              |
-| **Dependabot** (`dependabot.yml`) | Weekly dependency updates for npm and GitHub Actions with grouped PRs                                                  |
+- [Who is it for](#-who-is-it-for)
+- [Installation](#-installation)
+- [Quick Start](#-quick-start)
+- [Use Cases](#-use-cases)
+- [API](#-api)
+- [Security](#-security)
+- [stdout/stderr Behavior](#-stdoutstderr-behavior)
+- [Upcoming](#-upcoming)
+- [Contributing](#-contributing)
+- [Support the Project](#-support-the-project)
+- [License](#-license)
 
-## Prerequisites
+---
 
-- [Node.js](https://nodejs.org/) >= 24
-- [pnpm](https://pnpm.io/) >= 11
+## 🎯 Who is it for
 
-## Getting started
+Any developer or team that needs to share code context — whether human or machine.
+
+- **Feed a web LLM** with the right context: web interfaces are free or nearly free, you copy/paste as much as you want, whereas your IDE charges you per token.
+- **Share with a human**: code review, onboarding, PR summary, chat discussion — a clean `.md` file to drop anywhere.
+- **Automate in CI**: JSON output to feed an LLM pipeline (auto-review, auto-fix, PR description generation).
+- `sumup` + paste = the exact context, at the right time, zero friction.
+
+`sumup` is simple, concise, and **relentlessly efficient!**
+
+---
+
+## 📦 Installation
 
 ```bash
-# Clone the repository
-git clone https://github.com/oclkadev/node-starter.git
-cd node-starter
-
-# Install dependencies
-pnpm install
-
-# Set up git hooks
-pnpm prepare
+npm install -g @oclkadev/sumup
 ```
 
-## Usage
-
-### Development
+or
 
 ```bash
-# Run in development mode with tsx
-pnpm dev
-
-# Build for production
-pnpm build
+pnpm add -g @oclkadev/sumup
 ```
 
-### CLI
+or
 
 ```bash
-# Run the CLI
-pnpm dev
-
-# Run a specific command
-pnpm dev test
-
-# Verbose output
-pnpm dev test -V
-
-# Quiet mode (suppress all output except errors)
-pnpm dev test -q
-
-# Dry-run mode
-pnpm dev test -n
-
-# Show version
-pnpm dev -v
+bun add -g @oclkadev/sumup
 ```
 
-### Quality checks
+Or use it directly without installation:
 
 ```bash
-# Run all checks (types, lint, spell, md, secrets, build, size, publint)
-pnpm check:all
-
-# Run fast checks only (types, lint, knip)
-pnpm check:fast
-
-# Type checking
-pnpm check:types
-
-# Linting
-pnpm lint
-pnpm lint:fix
-
-# Spell check
-pnpm check:spell
-
-# Secret scanning
-pnpm check:secrets
-
-# Build verification (publint + attw)
-pnpm check:build
-
-# Size check
-pnpm check:size
+npx @oclkadev/sumup src
 ```
 
-### Testing
+> **Prerequisite:** Node.js >= 24 — Stack: Commander, near-instant execution.
+
+---
+
+## 🚀 Quick Start
 
 ```bash
-# Run all tests with coverage
-pnpm test:coverage
+# Bundle a folder → file + clipboard
+sumup src
 
-# Run e2e tests only
-pnpm test:e2e
+# Bundle staged files
+sumup src -s -c
 
-# Run mutation testing with Stryker
-pnpm test:mutate
+# Bundle diff against main
+sumup src -b main
 
-# Focus on a single file (coverage + mutation)
-pnpm test:focus commands/test/handler
-
-# Watch mode
-pnpm test:watch
+# Bundle a folder → clipboard only -> Estimate token cost
+sumup src -c -k
 ```
 
-### Formatting
+---
 
-```bash
-# Format all files with Prettier
-pnpm format
-```
-
-### Committing
-
-```bash
-# Interactive conventional commit via commitizen
-pnpm commit
-
-# Or use the cc skill for AI-generated commit messages
-```
-
-### Versioning
-
-```bash
-# Create a changeset
-pnpm changeset
-
-# Version bump based on changesets
-pnpm changeset version
-```
-
-### API documentation
-
-```bash
-# Generate API docs from TSDoc comments
-pnpm gen:docs
-```
-
-Output is generated in `docs/api/`.
-
-## Project structure
+## 🌟 Use Cases
 
 ```text
-node-starter/
-├── .changeset/          # Changesets configuration and entries
-├── .github/             # GitHub templates and workflows
-├── .husky/              # Git hooks (pre-commit, commit-msg, pre-push)
-├── docs/                # Documentation
-├── scripts/             # Utility scripts (test-focus)
-├── src/
-│   ├── commands/        # CLI commands (Commander)
-│   │   ├── index.ts     # Root command and runCli()
-│   │   ├── options.ts   # Shared option definitions
-│   │   └── test/        # Test command
-│   ├── core/            # Core utilities
-│   │   ├── errors/      # AppError, ErrorCode, error helpers
-│   │   └── helpers/     # String helpers
-│   ├── ui/              # I/O layer (io singleton)
-│   └── index.ts         # Entry point
-├── tests/               # Test setup, helpers, and fixtures
-│   ├── e2e/             # E2E test helpers (run-cli)
-│   ├── unit/            # Unit test helpers (mock-tty)
-│   └── setup.ts         # Global test setup (console mocks)
-├── .editorconfig        # Editor configuration
-├── .gitignore
-├── .markdownlint.json   # Markdownlint configuration
-├── .npmrc               # npm configuration
-├── .nvmrc               # Node version
-├── .prettierignore      # Prettier ignore patterns
-├── .prettierrc          # Prettier configuration
-├── .size-limit.json     # Size limit configuration
-├── commitlint.config.mjs # Commitlint configuration
-├── cspell.config.mjs    # Spell check configuration
-├── eslint.config.mjs    # ESLint flat config
-├── ignores.mjs          # Shared ignore patterns for ESLint
-├── knip.config.mjs      # Knip configuration
-├── package.json
-├── pnpm-workspace.yaml  # pnpm workspace configuration
-├── stryker.config.mjs   # Stryker mutation testing config
-├── test-exclude.mjs     # Shared test exclusion patterns
-├── tsconfig.json        # TypeScript configuration
-├── tsup.config.ts       # tsup build configuration
-├── typedoc.json         # TypeDoc configuration
-└── vitest.config.mjs    # Vitest configuration
+                       ┌──► 🤖 Web LLM (free or near-free interface)
+                       │
+  [ Codebase / Git ] ──┼──► 👥 Peer review & chat (drop a .md file)
+        + sumup        │
+                       ├──► 📚 Onboarding & architecture digests
+                       │
+                       └──► 🔌 CI & scripting (JSON → LLM API)
 ```
 
-## Scripts
+- **🤖 Web LLMs:** Bundle relevant files, paste into chat. Free, precise, no IDE subscription.
+- **👥 Collaboration:** A readable `.md` file to share in your chat or for a PR draft.
+- **📚 Onboarding:** An architecture digest with glossary (`-g`) and tree (`-t`) for a newcomer.
+- **🔌 CI & scripting:** JSON output (`-j`) to feed an LLM for auto-review, auto-fix, or PR description generation.
 
-| Script               | Description                            |
-| -------------------- | -------------------------------------- |
-| `pnpm build`         | Build with tsup (CJS + ESM + types)    |
-| `pnpm dev`           | Run with tsx in development mode       |
-| `pnpm lint`          | Lint with ESLint                       |
-| `pnpm lint:fix`      | Lint and auto-fix with ESLint          |
-| `pnpm lint:md`       | Lint and fix Markdown files            |
-| `pnpm format`        | Format all files with Prettier         |
-| `pnpm check:all`     | Run all quality checks                 |
-| `pnpm check:fast`    | Run types + lint + knip                |
-| `pnpm check:types`   | Type check with tsc                    |
-| `pnpm check:spell`   | Spell check with cspell                |
-| `pnpm check:secrets` | Secret scan with gitleaks              |
-| `pnpm check:build`   | Build verification with publint + attw |
-| `pnpm check:size`    | Size check with size-limit             |
-| `pnpm test:coverage` | Run all tests with V8 coverage         |
-| `pnpm test:e2e`      | Run e2e tests only                     |
-| `pnpm test:mutate`   | Run Stryker mutation testing           |
-| `pnpm test:focus`    | Focus coverage + mutation on a file    |
-| `pnpm test:watch`    | Run tests in watch mode                |
-| `pnpm knip`          | Dead code detection                    |
-| `pnpm gen:docs`      | Generate API docs with TypeDoc         |
-| `pnpm commit`        | Interactive commit with commitizen     |
+---
 
-## License
+## 📦 API
 
-[MIT](./LICENSE)
+By default, `sumup` writes to a `.sumup_<timestamp>.md` file **and** copies to the clipboard.
+
+### 📋 Default Usage
+
+Gathers all files from a folder (recursive) into a single Markdown document.
+
+```bash
+sumup src
+```
+
+```txt
+✅ 13 files sumuprized
+   in `.sumup_20260806_180000.md`
+   and copied to clipboard!
+```
+
+### 📋 Multi-targets
+
+Multiple folders passed as positional arguments. Files are aggregated into a single bundle.
+
+```bash
+sumup src scripts
+```
+
+### 📋 Output
+
+#### 📋 `-c` or `--copy-only`
+
+Copies the result to the clipboard only. No file written to disk. Useful for a quick paste into a chat or editor.
+
+```bash
+sumup src -c
+```
+
+```txt
+✅ 13 files sumuprized in clipboard!
+```
+
+#### 📋 `-f` or `--file-only`
+
+Writes the result to a `.sumup_<timestamp>.md` file only. No clipboard copy. For a custom path, use shell redirection: `sumup src -f > foo.md`.
+
+```bash
+sumup src -f
+```
+
+```txt
+✅ 13 files sumuprized in `.sumup_20260806_180000.md`
+```
+
+> **Note:** `-c` and `-f` are mutually exclusive. Error: _"Error: --copy-only and --file-only are mutually exclusive"_.
+
+### 📋 Git
+
+#### 📋 `-d` or `--diff`
+
+Filters files based on `git diff` (uncommitted changes). Only modified files are included in the bundle, with their current content and the diff patch as a header.
+
+```bash
+sumup src -d
+```
+
+#### 📋 `-s` or `--staged`
+
+Filters files based on `git diff --staged` (indexed changes). Only staged files are included in the bundle.
+
+```bash
+sumup src -s
+```
+
+#### 📋 `-b` or `--branch`
+
+Filters files based on the diff against a parent branch (e.g. `main`). Only files modified between the current branch and the target branch are included.
+
+```bash
+sumup src -b main
+```
+
+> **Note:** `-d`, `-s`, and `-b` are mutually exclusive. Error: _"Error: --diff, --staged and --branch are mutually exclusive"_.
+
+### 📋 Filters
+
+#### 📋 `-e` or `--exclude`
+
+Excludes files via a comma-separated list of glob patterns. Applied after the initial selection (folder or git).
+
+```bash
+sumup src -e "foo/**,bar/**/*.md"
+```
+
+#### 📋 `-i` or `--include`
+
+Includes only files matching the comma-separated list of glob patterns. Applied after the initial selection.
+
+```bash
+sumup src -i "foo/**,bar/**/*.md"
+```
+
+#### 📋 `-l` or `--lexicon`
+
+Loads a collection of previously saved patterns (include/exclude) from a file. Lets you reuse a recurring selection without retyping patterns.
+
+```bash
+sumup src -l .sumup/files-for-ia.txt
+```
+
+### 📋 Format
+
+#### 📋 `-g` or `--glossary`
+
+Adds a glossary at the top of the document with links to the corresponding sections. Makes navigation in the bundle easier for a human or an LLM.
+
+```bash
+sumup src -g
+```
+
+#### 📋 `-t` or `--tree`
+
+Adds a file and folder tree at the top of the document (after the glossary if present). Provides an overview of the structure before the content.
+
+```bash
+sumup src -t
+```
+
+#### 📋 `-j` or `--json`
+
+Outputs JSON instead of Markdown. The JSON contains metadata (files, size, tokens) and the aggregated content. Designed for direct integration with LLM APIs — the payload is ready to send without transformation.
+
+In CI, combined with git flags, feeds an LLM for auto-review, auto-fix, or PR description generation:
+
+```bash
+# JSON payload of staged files, ready to send to an LLM API
+sumup src -s -j | curl -X POST https://api.llm.example.com/v1/chat/completions \
+  -H "Authorization: Bearer $API_KEY" \
+  -d @-
+```
+
+```bash
+sumup src -j
+```
+
+### 📋 Info
+
+#### 📋 `-k` or `--tokens`
+
+Displays an estimate of the token volume of the generated bundle (based on cl100k_base encoding). Helps anticipate consumption before sending to an LLM.
+
+> **Note:** The estimate is based on `cl100k_base`. Drift depending on the target LLM may vary by 5 to 15%.
+
+```bash
+sumup src -k
+```
+
+### ✅ Execution
+
+#### `--dry-run`
+
+Simulates execution without writing any file or copying to the clipboard. Only displays what would be generated (file list, estimated size). Useful for verifying a selection before running.
+
+```bash
+sumup src --dry-run
+```
+
+#### `--verbose`
+
+Enables verbose output: lists each processed file, timings, resolved paths. Useful for debugging.
+
+```bash
+sumup src --verbose
+```
+
+#### `--quiet`
+
+Suppresses all non-essential output. Only errors and the final result are shown. Useful in CI or in a pipe.
+
+```bash
+sumup src --quiet
+```
+
+---
+
+⚙️ Config
+
+Manages persistent `sumup` preferences (default output format, naming pattern, base branch for `-b`, etc.). Config is stored locally in `.sumup/config.json` (project-level) or `~/.config/sumup/config.json` (user-level).
+
+### 📋 `sumup config init`
+
+Initializes a config file with default values. If a file already exists, asks for confirmation before overwriting (or use `--force`).
+
+```bash
+sumup config init
+```
+
+```txt
+✅ Config created at `.sumup/config.json`
+```
+
+```bash
+sumup config init --force
+```
+
+### 📋 `sumup config list`
+
+Lists all key/value pairs of the active config (project + user merged, with the source of each key).
+
+```bash
+sumup config list
+```
+
+```txt
+output.format     markdown   (project)
+output.mode       both       (default)
+naming.pattern    .sumup_<timestamp>.md   (default)
+git.baseBranch    main       (user)
+tokens.encoding   cl100k_base   (default)
+```
+
+### 📋 `sumup config get <key>`
+
+Retrieves the value of a given key. Returns the resolved value (project > user > default).
+
+```bash
+sumup config get output.format
+```
+
+```txt
+markdown
+```
+
+> **Note:** Key not found → error: _"Error: unknown config key 'foo.bar'"_.
+
+### 📋 `sumup config set <key> <value>`
+
+Sets the value of a key. By default writes to the project config. Use `--global` to write to the user config.
+
+```bash
+sumup config set output.format json
+```
+
+```txt
+✅ output.format = json (project)
+```
+
+```bash
+sumup config set git.baseBranch develop --global
+```
+
+```txt
+✅ git.baseBranch = develop (user)
+```
+
+> **Note:** Unknown key → error: _"Error: unknown config key 'foo.bar'"_. Invalid value → error: _"Error: invalid value 'xyz' for output.format (expected: markdown | json)"_.
+>
+> **Legend:** ✅ Implemented · 🚧 In progress · 📋 Planned
+
+---
+
+## 🔒 Security
+
+### `.gitignore` respected by default
+
+`sumup` reads and respects the project's `.gitignore`. Ignored files (`node_modules`, `dist`, `.env`, etc.) are never included in the bundle.
+
+A hardcoded security list also excludes sensitive files by default: `.env`, `.env.*`, `*.pem`, `*.key`, `id_rsa`, `id_ed25519`, etc.
+
+---
+
+## 📡 stdout/stderr Behavior
+
+`sumup` follows the Unix convention:
+
+- **stdout**: the generated content (Markdown or JSON). Enables clean redirection and piping.
+- **stderr**: info logs (`✅ 13 files sumuprized`), warnings, and errors.
+
+```bash
+# foo.md contains only the bundle, no logs
+sumup src -f > foo.md
+
+# The pipe receives only the JSON
+sumup src -s -j | curl -X POST https://api.llm.example.com/...
+```
+
+---
+
+## 🔮 Upcoming
+
+- `--max-tokens N` — Warning or cutoff if the bundle exceeds a threshold
+- Monorepo workspace support
+- Plugin system for custom formats
+
+👉 [Full roadmap and voting](https://github.com/oclkadev/sumup/projects/1)
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+### Setup
+
+```bash
+git clone https://github.com/oclkadev/sumup.git
+cd sumup
+corepack enable
+pnpm install
+```
+
+### Scripts
+
+| Script               | Description                                           |
+| -------------------- | ----------------------------------------------------- |
+| `pnpm dev`           | Run the CLI in development mode                       |
+| `pnpm build`         | Compile with tsup                                     |
+| `pnpm test:coverage` | Unit tests with coverage                              |
+| `pnpm test:e2e`      | End-to-end tests                                      |
+| `pnpm test:mutate`   | Mutation testing (Stryker)                            |
+| `pnpm lint`          | ESLint                                                |
+| `pnpm check:all`     | All checks (types, lint, tests, build, size, secrets) |
+| `pnpm check:fast`    | Fast checks (types, lint, tests, knip)                |
+
+### Commits
+
+The project uses Conventional Commits via commitizen:
+
+```bash
+pnpm commit
+```
+
+---
+
+## ☕ Support the Project
+
+> 5 minutes saved per month? 5 euros per month helps me keep going.
+
+[GitHub Sponsors](https://github.com/sponsors/oclkadev) · [Buy Me a Coffee](https://www.buymeacoffee.com/oclka)
+
+---
+
+## 📄 License
+
+[MIT](LICENSE) © [oclkadev](https://oclka.dev)

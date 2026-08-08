@@ -33,5 +33,9 @@
 
   "eslint.workingDirectories": [{ "mode": "auto" }],
   "commentTranslate.targetLanguage": "fr",
-  "css.lint.unknownAtRules": "ignore"
+  "css.lint.unknownAtRules": "ignore",
+  "sonarlint.connectedMode.project": {
+    "connectionId": "oclka-1",
+    "projectKey": "oclkadev_sumup"
+  }
 }
